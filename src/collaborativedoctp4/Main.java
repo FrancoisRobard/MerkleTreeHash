@@ -11,6 +11,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import javax.swing.JFrame;
+import java.util.ArrayList;
 
 /**
  *
@@ -58,13 +59,31 @@ public class Main {
             InputStream ips=new FileInputStream(filePath); // Open file
             InputStreamReader ipsr=new InputStreamReader(ips); // Open lecture mode
             BufferedReader br=new BufferedReader(ipsr); // Open buffered reader
-            String line; // Variable that will contain lines content
-            while ((line = br.readLine()) != null) { // Reading the file line by line
-                System.out.println(line);
+            String event; // Variable that will contain lines of the file (=events)
+            int eventCounter=0;
+            ArrayList<MerkleTree> mTree = new ArrayList<>(); // the list that will countain our Merkle tree
+            while ((event = br.readLine()) != null) { // Reading the file line by line (= event after event)
+                eventCounter+=1;
+                // For each event, computing the associated tree
+                System.out.println("Here is the content of the event n°"+eventCounter+" : "+event);
+                MerkleTree leaf = new Leaf(event,eventCounter);
+                mTree.add(leaf);
             }
+            while(mTree.size()>=1){ // Now calculating the interal nodes of our tree (hashing the leaves two by two) until we get only one principal node 
+                mTree=computeInternalNodes(mTree);
+            }   
         }catch (Exception e){
             System.out.println(e.toString());
         }
+        return null;
+    }
+    
+    /**
+     * Function that calculates the interal nodes of our tree by hashing the leaves two by two.
+     * @param mTree
+     * @return 
+     */
+    private static ArrayList<MerkleTree> computeInternalNodes(ArrayList<MerkleTree> mTree){
         return null;
     }
     
