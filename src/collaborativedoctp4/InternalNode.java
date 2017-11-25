@@ -5,6 +5,11 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * Class (extending the Tree class) implementing the Internal Nodes of the Merkle Tree.
+ * Here only writing th constructor is needed. It computes a hash with the two hashes of the given Merkle tree objects(with 0x01 prepended before the two hashes bytes).
+ * @author francois
+ */
 public class InternalNode extends Tree{
     
     public InternalNode(MerkleTree leftTree, MerkleTree rightTree) throws IOException, NoSuchAlgorithmException{

@@ -1,5 +1,9 @@
 package collaborativedoctp4;
 
+/**
+ * Interface for the Merkle tree
+ * @author francois
+ */
 public interface MerkleTree {
     public byte [] getHash();
     public MerkleTree getLeftSubTree();

@@ -1,5 +1,9 @@
 package collaborativedoctp4;
 
+/**
+ * Abstract implementation of the Meklt Tree, with the attributes and main getters functions.
+ * @author francois
+ */
 public abstract class Tree implements MerkleTree{
     protected byte [] hash;
     protected MerkleTree leftSubTree;

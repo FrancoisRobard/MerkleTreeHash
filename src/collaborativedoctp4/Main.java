@@ -23,8 +23,13 @@ public class Main {
      */
     public static void main(String[] args) {
         buildMerkleTree();
+        System.exit(0);
     }
     
+    /**
+     * Function to get the path of a file using the windows file browser.
+     * @return 
+     */
     public static String loadFile(){
         JFrame fenetre = new JFrame();
             FileDialog fd = new FileDialog(fenetre, "Choisissez un fichier txt à charger :", FileDialog.LOAD);
@@ -43,6 +48,10 @@ public class Main {
          return fd.getDirectory()+filename;
     }
     
+    /**
+     * Function to build a Merkle tree from a file (each line of the file is considered as an event).
+     * @return 
+     */
     private static MerkleTree buildMerkleTree(){
         try{
             String filePath = loadFile();
@@ -50,7 +59,7 @@ public class Main {
             InputStreamReader ipsr=new InputStreamReader(ips); // Open lecture mode
             BufferedReader br=new BufferedReader(ipsr); // Open buffered reader
             String line; // Variable that will contain lines content
-            while ((line = br.readLine()) != null) {
+            while ((line = br.readLine()) != null) { // Reading the file line by line
                 System.out.println(line);
             }
         }catch (Exception e){
