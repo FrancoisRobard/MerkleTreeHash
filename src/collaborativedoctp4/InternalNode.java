@@ -13,6 +13,7 @@ import java.security.NoSuchAlgorithmException;
 public class InternalNode extends Tree{
     
     public InternalNode(MerkleTree leftTree, MerkleTree rightTree) throws IOException, NoSuchAlgorithmException{
+        event=null;
         // The right tree is supposed to be the higher one, in term of indexes of events
         beginningIndex = leftTree.getBegenningIndex();
         endingIndex = rightTree.getEndingIndex();

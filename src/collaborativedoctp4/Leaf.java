@@ -12,7 +12,6 @@ import java.io.IOException;
  * @author francois
  */
 public class Leaf extends Tree{
-    String event;
     
     public Leaf(String event, int nb) throws NoSuchAlgorithmException, IOException{
         this.event=event;

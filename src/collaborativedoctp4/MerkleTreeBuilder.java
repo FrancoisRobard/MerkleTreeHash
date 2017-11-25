@@ -3,11 +3,17 @@ package collaborativedoctp4;
 import java.awt.FileDialog;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 
+/**
+ * Class with public static functions containing the functions for building a Merkle Tree from a file.
+ * @author francois
+ */
 public class MerkleTreeBuilder {
     /**
      * Function to get the path of a file using the windows file browser.
@@ -47,13 +53,17 @@ public class MerkleTreeBuilder {
             while ((event = br.readLine()) != null) { // Reading the file line by line (= event after event)
                 eventCounter+=1;
                 // For each event, computing the associated tree
-                System.out.println("Here is the content of the event n°"+eventCounter+" : "+event);
+                System.out.println("Here is the content of event n°"+eventCounter+" : "+event);
                 MerkleTree leaf = new Leaf(event,eventCounter);
                 mTree.add(leaf);
             }
-            while(mTree.size()>=1){ // Now calculating the interal nodes of our tree (hashing the leaves two by two) until we get only one principal node 
+            System.out.println("------------------------------------------------------------------");
+            System.out.println("Start building the merkle tree for those "+mTree.size()+" events...");
+            while(mTree.size()>1){ // Now calculating the interal nodes of our tree (hashing the leaves two by two) until we get only one principal node
                 mTree=computeInternalNodes(mTree);
-            }   
+            }
+            System.out.println("The Merkle Tree has been built successfully !");
+            return mTree.get(0);
         }catch (Exception e){
             System.out.println(e.toString());
         }
@@ -65,8 +75,34 @@ public class MerkleTreeBuilder {
      * @param mTree
      * @return 
      */
-    private static ArrayList<MerkleTree> computeInternalNodes(ArrayList<MerkleTree> mTree){
-        
-        return null;
+    private static ArrayList<MerkleTree> computeInternalNodes(ArrayList<MerkleTree> mTree) throws IOException, NoSuchAlgorithmException{
+        System.out.println("------------------------------------------------------------------");
+        System.out.println("Travesing the Merkle Tree to see what hashes were computed (the tree is traverser in a ");
+        ArrayList<MerkleTree> internalNodesTree = new ArrayList<>();
+        int length =mTree.size();
+        for(int i=0;i<length/2;i++){ // Getting the nodes of the tree two by two, computing their hash in a new inIernal Node, and adding this node to the new Internal Nodes list.
+            MerkleTree node1=mTree.get(2*i);
+            MerkleTree node2=mTree.get(2*i+1);
+            MerkleTree iNode = new InternalNode(node1,node2);
+            internalNodesTree.add(iNode);
+        }
+        // If the given list of node was even, the computation is finished.
+        // If the given list of node was odd, we add its last node to our new internal Nodes list (as there is no other node left to compute its hash with)
+        if((length%2!=0) ? true : false){
+            internalNodesTree.add(mTree.get(length-1));
+        }
+        return internalNodesTree;
+    }
+    
+    public static void checkMerkleTree(MerkleTree mTree){
+        if(mTree.getBegenningIndex()!=mTree.getEndingIndex()){
+            System.out.println(" > hash "+mTree.getBegenningIndex()+".."+mTree.getEndingIndex()+" (Internal Node)");
+            checkMerkleTree(mTree.getLeftSubTree());
+            checkMerkleTree(mTree.getRightSubTree());
+        }else{
+            System.out.println(" > hash "+mTree.getBegenningIndex()+"    (leaf with event = '"+mTree.getEvent()+"')");
+        }
     }
 }
+
+

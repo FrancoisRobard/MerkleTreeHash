@@ -10,7 +10,8 @@ public abstract class Tree implements MerkleTree{
     protected MerkleTree rightSubTree;
     protected int beginningIndex;
     protected int endingIndex;
-    
+    protected String event;
+   
     @Override
     public byte [] getHash(){return hash;};
     @Override
@@ -21,4 +22,7 @@ public abstract class Tree implements MerkleTree{
     public int getBegenningIndex(){return beginningIndex;};
     @Override
     public int getEndingIndex(){return endingIndex;};
+    @Override
+    public String getEvent(){return event;};
+    
 }

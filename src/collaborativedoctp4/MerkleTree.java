@@ -10,5 +10,6 @@ public interface MerkleTree {
     public MerkleTree getRightSubTree();
     public int getBegenningIndex();
     public int getEndingIndex();
+    public String getEvent();
 }
 
