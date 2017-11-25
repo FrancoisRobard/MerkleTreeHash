@@ -76,8 +76,6 @@ public class MerkleTreeBuilder {
      * @return 
      */
     private static ArrayList<MerkleTree> computeInternalNodes(ArrayList<MerkleTree> mTree) throws IOException, NoSuchAlgorithmException{
-        System.out.println("------------------------------------------------------------------");
-        System.out.println("Travesing the Merkle Tree to see what hashes were computed (the tree is traverser in a ");
         ArrayList<MerkleTree> internalNodesTree = new ArrayList<>();
         int length =mTree.size();
         for(int i=0;i<length/2;i++){ // Getting the nodes of the tree two by two, computing their hash in a new inIernal Node, and adding this node to the new Internal Nodes list.
